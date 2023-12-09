@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<!-- переменная row -->
+<h1>{{row.title}}</h1>
+
+<!-- список rows -->
+{% for i in rows %}
+    <img src="{{i.image.url}}" alt="">
+    <br>
+{% endfor %}
+
+<br>
+<form action="{% url 'comments' row.id %}" method="post">
+    {% csrf_token %}
+    <input placeholder="" name="user" type="text">
+    <input name="message" type="text">
+    <input type="submit" value="Отправить">
+</form>
+<br>
+
+{% for i in comments %}
+    <section class="contact-section">
+        <p class="mb-4">{{i.created_at}}</p>
+        <p class="mb-4">{{i.user}}: {{i.message}}</p>
+    </section>
+{% endfor %}
+
+
+{% endblock %}
